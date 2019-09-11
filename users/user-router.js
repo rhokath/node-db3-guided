@@ -76,5 +76,14 @@ router.delete('/:id', (req, res) => {
     res.status(500).json({ message: 'Failed to delete user' });
   });
 });
+router.get('/:id/posts', (req, res)=>{
+    db('posts as p')
+      .join('users as u', 'u.id', '=', 'p.user_id')
+      .where({user_id: id})
+      .then(posts => {
+        res.status(200).json(posts);
+      })
+      .catch(error => res.send(error))
+})
 
 module.exports = router;
